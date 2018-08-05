@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import json
+import sys
+
+(total, liers) = (0, 0)
+purpose = 3 # Ad selection, delivery, reporting
+data = json.loads(sys.stdin.read())
+
+for p in data['purposes']:
+    if p['id'] == purpose:
+        break
+
+for vendor in data['vendors']:
+    total += 1
+    if purpose in vendor['legIntPurposeIds']:
+        liers += 1
+        print(" * [%s](%s}\n" % (vendor['name'], vendor['policyUrl']))
+
+print("%d of %d listed vendors claim LI for purpose: %s" % (liers, total, p['name']))
+

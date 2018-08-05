@@ -1,19 +1,16 @@
-all : index.html
-
-hooks : .git/hooks/pre-push
+all : li-ers.txt
 
 vendorlist.json :
 	wget https://vendorlist.consensu.org/vendorlist.json
 
-.git/hooks/% : Makefile
-	echo "#!/bin/sh" > $@
-	echo "make `basename $@`" >> $@
-	chmod 755 $@
+li-ers.txt : vendorlist.json li-ers
+	./li-ers < $< > $@
 
-pre-push : deploy
+clean : 
+	rm -f li-ers.txt
 
 pristine : clean
 	rm -f vendorlist.json
 
-.PHONY : all clean hooks pre-push
+.PHONY : all clean pristine
 
