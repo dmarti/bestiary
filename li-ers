@@ -15,7 +15,7 @@ for vendor in data['vendors']:
     total += 1
     if purpose in vendor['legIntPurposeIds']:
         liers += 1
-        print(" * [%s](%s}\n" % (vendor['name'], vendor['policyUrl']))
+        print(" * [%s](%s)\n" % (vendor['name'], vendor['policyUrl']))
 
 print("%d of %d listed vendors claim LI for purpose: %s" % (liers, total, p['name']))
 
