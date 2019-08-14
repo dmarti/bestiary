@@ -1,0 +1,3 @@
+[submodule "FilterLists"]
+	path = FilterLists
+	url = git@github.com:collinbarrett/FilterLists.git

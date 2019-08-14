@@ -1,6 +1,8 @@
-all : li-ers.txt
+FILTERLISTS=$(shell scripts/filterlists list FilterLists/data/FilterList.json)
 
-data : data/iab/vendorlist.json data/aboutads-info/members.json
+all : data
+
+data : data/iab/vendorlist.json data/aboutads-info/members.json ${FILTERLISTS}
 
 data/iab/vendorlist.json :
 	mkdir -p data/iab
@@ -10,11 +12,11 @@ data/aboutads-info/members.json :
 	mkdir -p data/aboutads-info
 	wget -O $@ http://optout.aboutads.info/naibc/resource/members/public
 
-li-ers.txt : data/iab/vendorlist.json scripts/li-ers
-	./li-ers < $< > $@
+data/filterlists/% :
+	scripts/filterlists fetch $@
 
 clean : 
-	rm -f li-ers.txt
+	true
 
 pristine : clean
 	rm -rf data
