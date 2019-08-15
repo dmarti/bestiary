@@ -7,8 +7,8 @@ from tempfile import NamedTemporaryFile
 from urllib.parse import quote_plus, unquote
 from urllib.request import HTTPError, Request, urlopen
 
-def url_to_path(url):
-    return os.path.join('data/filterlists', quote_plus(url))
+def url_to_path(syntaxId, url):
+    return os.path.join('data/filterlists', str(syntaxId), quote_plus(url))
 
 def path_to_url(path):
     return unquote(os.path.basename(path))
@@ -17,7 +17,7 @@ def list_lists(filename):
     with open(filename) as infile:
         ll = json.load(infile)
         for k in ll:
-            print(url_to_path(k['viewUrl']))
+            print(url_to_path(k.get('syntaxId', 0), k['viewUrl']))
 
 def spew_file(filename, content):
     try:
@@ -55,7 +55,6 @@ if 'fetch' == sys.argv[1]:
     pathname = sys.argv[2]
     url = path_to_url(pathname)
     fetch_url(url, pathname)
-
 
 # vim: autoindent textwidth=100 tabstop=4 shiftwidth=4 expandtab softtabstop=4 filetype=python
 
